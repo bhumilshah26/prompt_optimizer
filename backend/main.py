@@ -4,6 +4,8 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import openai
 from fastapi.middleware.cors import CORSMiddleware
+from pymongo import MongoClient
+from datetime import datetime
 import json
 
 # Load environment variables
@@ -24,6 +26,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# --- MongoDB Client Initialization  ---
+try:
+    mongo_client = MongoClient(os.getenv("DATABASE_URL"))
+    db = mongo_client.get_database("prompt_optimizer") # Or whatever you named your DB
+    feedback_collection = db.get_collection("prompts_responses")
+    print("Successfully connected to MongoDB.")
+except Exception as e:
+    print(f"Error connecting to MongoDB: {e}")
+    mongo_client = None
 
 # --- OpenAI Client Initialization ---
 try:
@@ -146,17 +157,31 @@ async def get_llm_response_endpoint(request: LLMRequest):
 
 @app.post("/submit_feedback")
 async def submit_feedback_endpoint(request: FeedbackRequest):
-    feedback_log = {
+    """
+    Receives feedback and saves it as a document in MongoDB.
+    """
+    if not mongo_client:
+        raise HTTPException(status_code=500, detail="Database connection not available.")
+    
+
+    # Create the feedback document to be inserted
+    feedback_document = {
         "goal": request.goal,
         "prompt_used": request.prompt,
         "model_response": request.response,
-        "user_rating": request.rating
+        "user_rating": request.rating,
+        "timestamp": datetime.utcnow() # Add a timestamp for better tracking
     }
-    
-    with open("feedback_log.jsonl", "a") as f:
-        f.write(json.dumps(feedback_log) + "\n")
+
+    try:
+        result = feedback_collection.insert_one(feedback_document)
         
-    return {"message": "Feedback submitted successfully!"}
+        print(f"Feedback inserted with ID: {result.inserted_id}")
+        
+        return {"message": "Feedback submitted successfully!"}
+    except Exception as e:
+        print(f"Error writing to database: {e}")
+        raise HTTPException(status_code=500, detail="An error occurred while saving feedback.")
 
 
 @app.get("/")
