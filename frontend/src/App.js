@@ -125,7 +125,7 @@ function App() {
         <form onSubmit={handleGeneratePrompts} className="prompt-form">
           <div className="form-group">
             <label htmlFor="goal">Your Goal</label>
-            <textarea id="goal" value={goal} style={{resize:'none'}} placeholder='Enter your goal' onChange={(e) => setGoal(e.target.value)} rows="3" />
+            <textarea id="goal" value={goal} style={{resize:'none'}} placeholder='Enter your goal(eg. summarize this text)' onChange={(e) => setGoal(e.target.value)} rows="3" />
           </div>
           <div className="form-group">
             <label htmlFor="text_data">Your Text Data</label>
