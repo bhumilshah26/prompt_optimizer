@@ -25,6 +25,7 @@ const StarRating = ({ rating, setRating, disabled }) => {
 
 
 function App() {
+  const BACKEND_URL = process.env.BACKEND_URL
   const [goal, setGoal] = useState("");
   const [textData, setTextData] = useState("");
   
@@ -42,7 +43,7 @@ function App() {
     setResults({});
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/generate_prompts', {
+      const response = await fetch(BACKEND_URL + '/generate_prompts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ goal, text_data: textData }),
@@ -63,7 +64,7 @@ function App() {
     setResults(prev => ({ ...prev, [index]: { ...prev[index], isLoading: true } }));
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/get_llm_response', {
+      const response = await fetch(BACKEND_URL + '/get_llm_response', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: promptText }),
