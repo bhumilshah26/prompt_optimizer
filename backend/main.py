@@ -14,6 +14,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:3000",
+    "https://prompt-optimizer-weld-three.vercel.app"
 ]
 
 app.add_middleware(
