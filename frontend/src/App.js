@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
 // Star rating component
@@ -118,18 +118,18 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Adaptive Prompt Optimizer</h1>
+        <h1>Prompt Optimizer</h1>
         <p>Generate & Rate Multiple Prompt Strategies</p>
       </header>
       <main className="App-main">
         <form onSubmit={handleGeneratePrompts} className="prompt-form">
           <div className="form-group">
             <label htmlFor="goal">Your Goal</label>
-            <textarea id="goal" value={goal} placeholder='Enter your goal' onChange={(e) => setGoal(e.target.value)} rows="3" />
+            <textarea id="goal" value={goal} style={{resize:'none'}} placeholder='Enter your goal' onChange={(e) => setGoal(e.target.value)} rows="3" />
           </div>
           <div className="form-group">
             <label htmlFor="text_data">Your Text Data</label>
-            <textarea id="text_data" value={textData} placeholder='Enter text' onChange={(e) => setTextData(e.target.value)} rows="6" />
+            <textarea id="text_data" value={textData} style={{resize:'none'}} placeholder='Enter text' onChange={(e) => setTextData(e.target.value)} rows="6" />
           </div>
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Generating Strategies...' : 'Generate Prompt Strategies'}
