@@ -105,11 +105,9 @@ async def generate_prompts_endpoint(request: PromptGenerationRequest):
             ],
             response_format={"type": "json_object"},
         )
-        print("1")
         
         prompt_variations_str = response.choices[0].message.content
         variations_data = json.loads(prompt_variations_str)
-        print("2")
 
         if isinstance(variations_data, dict):
              key_with_list = next((k for k, v in variations_data.items() if isinstance(v, list)), None)
@@ -122,7 +120,6 @@ async def generate_prompts_endpoint(request: PromptGenerationRequest):
         else:
             raise ValueError("LLM did not return a valid JSON list or object containing a list.")
 
-        print("3")
         return {"prompts": variations}
 
     except json.JSONDecodeError:
