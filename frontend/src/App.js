@@ -25,7 +25,7 @@ const StarRating = ({ rating, setRating, disabled }) => {
 
 
 function App() {
-  const BACKEND_URL = process.env.BACKEND_URL
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
   const [goal, setGoal] = useState("");
   const [textData, setTextData] = useState("");
   
