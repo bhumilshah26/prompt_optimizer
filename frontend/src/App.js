@@ -25,8 +25,8 @@ const StarRating = ({ rating, setRating, disabled }) => {
 
 
 function App() {
-  const [goal, setGoal] = useState('summarize the key points of this text as a JSON object with a "summary" key');
-  const [textData, setTextData] = useState('Artificial intelligence (AI) is a wide-ranging branch of computer science focused on building smart machines. Advancements in machine learning and deep learning are creating a paradigm shift in the tech industry.');
+  const [goal, setGoal] = useState("");
+  const [textData, setTextData] = useState("");
   
   const [prompts, setPrompts] = useState([]);
   const [results, setResults] = useState({}); // Store responses, ratings, etc. by index
@@ -124,11 +124,11 @@ function App() {
         <form onSubmit={handleGeneratePrompts} className="prompt-form">
           <div className="form-group">
             <label htmlFor="goal">Your Goal</label>
-            <textarea id="goal" value={goal} onChange={(e) => setGoal(e.target.value)} rows="3" />
+            <textarea id="goal" value={goal} placeholder='Enter your goal' onChange={(e) => setGoal(e.target.value)} rows="3" />
           </div>
           <div className="form-group">
             <label htmlFor="text_data">Your Text Data</label>
-            <textarea id="text_data" value={textData} onChange={(e) => setTextData(e.target.value)} rows="6" />
+            <textarea id="text_data" value={textData} placeholder='Enter text' onChange={(e) => setTextData(e.target.value)} rows="6" />
           </div>
           <button type="submit" disabled={isLoading}>
             {isLoading ? 'Generating Strategies...' : 'Generate Prompt Strategies'}
