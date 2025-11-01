@@ -132,7 +132,7 @@ function App() {
             <textarea id="text_data" value={textData} style={{resize:'none'}} placeholder='Enter text' onChange={(e) => setTextData(e.target.value)} rows="6" />
           </div>
           <button type="submit" disabled={isLoading}>
-            {isLoading ? 'Generating Strategies (Pleasee wait! Responses may take longer to generate)' : 'Generate Prompt Strategies'}
+            {isLoading ? 'Generating Strategies (Please wait! Responses may take longer to generate)' : 'Generate Prompt Strategies'}
           </button>
         </form>
 
